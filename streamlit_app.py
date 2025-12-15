@@ -1,67 +1,85 @@
 import streamlit as st
-import numpy as np
-import matplotlib.pyplot as plt
-import sympy as sp
 
 # ===============================
-# JUDUL APLIKASI
+# KONFIGURASI HALAMAN
+# ===============================
+st.set_page_config(
+    page_title="Solusi Integral - Titik Tengah",
+    page_icon="📐",
+    layout="centered"
+)
+
+# ===============================
+# HEADER
 # ===============================
 st.title("📐 Aplikasi Website Solusi Integral")
 st.subheader("Metode Pias Titik Tengah (Midpoint Rule)")
 
-st.write("""
-Aplikasi ini digunakan untuk menghitung **solusi integral numerik**
-menggunakan **kaidah titik tengah**.
+st.markdown("""
+Aplikasi ini dirancang untuk membantu menghitung **solusi integral numerik**
+menggunakan **kaidah titik tengah** secara interaktif berbasis web.
+
+🚧 **Status proyek: Dalam pengembangan**
 """)
 
-# ===============================
-# INPUT USER
-# ===============================
-st.sidebar.header("Input Parameter")
+st.divider()
 
-fungsi_input = st.sidebar.text_input(
-    "Masukkan fungsi f(x)",
-    value="x**2"
+# ===============================
+# INPUT SECTION (UI SAJA)
+# ===============================
+st.header("🧮 Input Parameter Integral")
+
+st.text_input(
+    label="Masukkan fungsi f(x)",
+    placeholder="Contoh: x**2, sin(x), exp(x)",
+    disabled=False
 )
 
-a = st.sidebar.number_input("Batas bawah (a)", value=0.0)
-b = st.sidebar.number_input("Batas atas (b)", value=1.0)
-n = st.sidebar.number_input("Jumlah pias (n)", min_value=1, value=4, step=1)
+col1, col2 = st.columns(2)
+
+with col1:
+    st.number_input("Batas bawah (a)", value=0.0)
+
+with col2:
+    st.number_input("Batas atas (b)", value=1.0)
+
+st.number_input(
+    label="Jumlah pias (n)",
+    min_value=1,
+    step=1,
+    value=4
+)
+
+st.button("🔍 Hitung Integral", disabled=True)
+
+st.info("⚠️ Fitur perhitungan masih dalam tahap pengembangan.")
+
+st.divider()
 
 # ===============================
-# PROSES PERHITUNGAN
+# OUTPUT SECTION (DUMMY)
 # ===============================
-x = sp.symbols('x')
+st.header("📊 Hasil Perhitungan")
 
-try:
-    fungsi = sp.sympify(fungsi_input)
-    f = sp.lambdify(x, fungsi, "numpy")
+st.markdown("""
+**Nilai Integral (Metode Titik Tengah):**  
+`— hasil belum tersedia —`
+""")
 
-    h = (b - a) / n
-    titik_tengah = a + h * (np.arange(n) + 0.5)
-    hasil = h * np.sum(f(titik_tengah))
+st.markdown("""
+**Visualisasi Grafik:**  
+Grafik fungsi dan pias titik tengah akan ditampilkan di sini.
+""")
 
-    st.success("Perhitungan berhasil!")
+st.warning("🚧 Grafik belum tersedia (on progress)")
 
-    st.write("### 📊 Hasil Perhitungan")
-    st.write(f"**Nilai Integral (Metode Titik Tengah):** `{hasil}`")
+st.divider()
 
-    # ===============================
-    # GRAFIK
-    # ===============================
-    x_plot = np.linspace(a, b, 400)
-    y_plot = f(x_plot)
-
-    fig, ax = plt.subplots()
-    ax.plot(x_plot, y_plot, label="f(x)")
-    ax.bar(titik_tengah, f(titik_tengah), width=h, alpha=0.3, edgecolor="black")
-    ax.set_title("Grafik Pias Titik Tengah")
-    ax.set_xlabel("x")
-    ax.set_ylabel("f(x)")
-    ax.legend()
-
-    st.pyplot(fig)
-
-except Exception as e:
-    st.error("Terjadi kesalahan pada fungsi yang dimasukkan")
-    st.write(e)
+# ===============================
+# FOOTER
+# ===============================
+st.caption("""
+© 2025  
+Aplikasi Website Solusi Integral  
+Metode Pias Titik Tengah | Streamlit
+""")
