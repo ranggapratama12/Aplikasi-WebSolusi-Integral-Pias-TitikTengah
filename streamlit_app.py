@@ -4,9 +4,9 @@ import streamlit as st
 # KONFIGURASI HALAMAN
 # ===============================
 st.set_page_config(
-    page_title="Solusi Integral - Titik Tengah",
-    page_icon="📐",
-    layout="centered"
+    page_title="Solusi Integral - Titik Tengah",
+    page_icon="📐",
+    layout="centered"
 )
 
 # ===============================
@@ -25,50 +25,49 @@ menggunakan **kaidah titik tengah** secara interaktif berbasis web.
 st.divider()
 
 # ===============================
-# INPUT SECTION (UI SAJA)
+# INPUT SECTION
 # ===============================
 st.header("🧮 Input Parameter Integral")
 
 st.text_input(
-    label="Masukkan fungsi f(x)",
-    placeholder="Contoh: x**2, sin(x), exp(x)",
-    disabled=False
+    label="Masukkan fungsi f(x)",
+    placeholder="Contoh: x**2, sin(x), exp(x)",
+    disabled=False
 )
 
 col1, col2 = st.columns(2)
 
 with col1:
-    st.number_input("Batas bawah (a)", value=0.0)
+    st.number_input("Batas bawah (a)", value=0.0)
 
 with col2:
-    st.number_input("Batas atas (b)", value=1.0)
+    st.number_input("Batas atas (b)", value=1.0)
 
 st.number_input(
-    label="Jumlah pias (n)",
-    min_value=1,
-    step=1,
-    value=4
+    label="Jumlah pias (n)",
+    min_value=1,
+    step=1,
+    value=4
 )
 
+# Tombol dinonaktifkan kembali untuk tahap pengembangan
 st.button("🔍 Hitung Integral", disabled=True)
 
-st.info("⚠️ Fitur perhitungan masih dalam tahap pengembangan.")
+st.info("⚠️ Fitur perhitungan sedang dikosongkan untuk tahap pengembangan selanjutnya.")
 
 st.divider()
 
 # ===============================
-# OUTPUT SECTION (DUMMY)
+# OUTPUT SECTION (PLACEHOLDER)
 # ===============================
 st.header("📊 Hasil Perhitungan")
 
 st.markdown("""
-**Nilai Integral (Metode Titik Tengah):**  
-`— hasil belum tersedia —`
+**Nilai Integral (Metode Titik Tengah):** `— hasil belum tersedia —`
 """)
 
 st.markdown("""
-**Visualisasi Grafik:**  
-Grafik fungsi dan pias titik tengah akan ditampilkan di sini.
+**Visualisasi Grafik:** Grafik fungsi dan pias titik tengah akan ditampilkan di sini setelah logika perhitungan diaktifkan.
 """)
 
 st.warning("🚧 Grafik belum tersedia (on progress)")
@@ -79,7 +78,7 @@ st.divider()
 # FOOTER
 # ===============================
 st.caption("""
-© 2025  
-Aplikasi Website Solusi Integral  
+© 2025  
+Aplikasi Website Solusi Integral  
 Metode Pias Titik Tengah | Streamlit
 """)
