@@ -82,4 +82,4 @@ st.caption("""
 © 2025  
 Aplikasi Website Solusi Integral  
 Metode Pias Titik Tengah | Streamlit
-""") selesaikan kode website interaksi ini, lanjutkan pada tahap perhitungan
+""")
