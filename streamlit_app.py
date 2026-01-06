@@ -19,7 +19,7 @@ st.subheader("Metode Pias Titik Tengah (Midpoint Rule)")
 
 st.markdown("""
 Aplikasi ini menghitung estimasi nilai integral tentu dengan membagi area di bawah kurva menjadi pias-pias persegi panjang. 
-Tinggi setiap pias ditentukan oleh nilai fungsi pada **titik tengah** setiap sub-interval.
+Tinggi pias diambil dari nilai fungsi pada **titik tengah** setiap sub-interval.
 """)
 
 st.divider()
@@ -53,19 +53,16 @@ n = st.number_input(
 if st.button("🔍 Hitung Integral"):
     try:
         # Menyiapkan fungsi matematika menggunakan eval
-        # Menyertakan "np" agar user bisa menggunakan library numpy
+        # "np" dimasukkan ke dictionary agar user bisa memakai np.sin, dll.
         def f(x):
-            return eval(func_str, {"np": np, "x": x, "x": x})
+            return eval(func_str, {"np": np, "x": x})
 
         # --- LOGIKA PERHITUNGAN METODE TITIK TENGAH ---
-        # Rumus lebar pias: dx = (b - a) / n
         dx = (b - a) / n
-        
-        # Menentukan titik-titik tengah (midpoints)
+        # Menentukan titik-titik tengah
         x_mid = np.linspace(a + dx/2, b - dx/2, n)
         y_mid = f(x_mid)
-        
-        # Hasil Integral: Jumlah dari (f(mid) * dx)
+        # Rumus: Integral = dx * (f(m1) + f(m2) + ... + f(mn))
         integral_result = np.sum(y_mid) * dx
 
         # ===============================
@@ -77,34 +74,31 @@ if st.button("🔍 Hitung Integral"):
         st.success(f"**Nilai Estimasi Integral:** {integral_result:.6f}")
 
         # --- VISUALISASI ---
-        # 
-        fig, ax = plt.subplots(figsize=(10, 6))
+                fig, ax = plt.subplots()
         
-        # Plot kurva fungsi utama
-        x_curve = np.linspace(a, b, 200)
+        # Gambar kurva halus f(x)
+        x_curve = np.linspace(a, b, 100)
         y_curve = f(x_curve)
         ax.plot(x_curve, y_curve, 'red', label='f(x)', linewidth=2)
 
-        # Plot batang pias (Midpoint Rectangles)
+        # Gambar batang pias (Midpoint Rectangles)
         x_left = np.linspace(a, b - dx, n)
-        ax.bar(x_left, y_mid, width=dx, align='edge', alpha=0.3, 
-               color='skyblue', edgecolor='blue', label='Pias (Metode Titik Tengah)')
+        ax.bar(x_left, y_mid, width=dx, align='edge', alpha=0.3, color='blue', edgecolor='darkblue', label='Pias Titik Tengah')
         
-        # Plot titik tengah pada kurva
-        ax.scatter(x_mid, y_mid, color='darkblue', s=30, zorder=5, label='Titik Tengah')
+        # Titik penanda di tengah pias
+        ax.scatter(x_mid, y_mid, color='darkblue', s=20, zorder=3)
 
-        ax.set_title(f"Visualisasi Integral dengan n = {n}", fontsize=14)
+        ax.set_title(f"Visualisasi Midpoint Rule (n={n})")
         ax.set_xlabel("x")
         ax.set_ylabel("f(x)")
         ax.legend()
-        ax.grid(True, linestyle='--', alpha=0.5)
+        ax.grid(True, linestyle='--', alpha=0.6)
         
-        # Tampilkan grafik di Streamlit
         st.pyplot(fig)
 
     except Exception as e:
-        st.error(f"Terjadi kesalahan: {e}")
-        st.info("Pastikan penulisan fungsi menggunakan format Python yang benar (misal: `x**2` untuk pangkat, atau `np.sin(x)`).")
+        st.error(f"Terjadi kesalahan pada penulisan fungsi: {e}")
+        st.info("Tips: Gunakan format Python. Contoh: `x**2` untuk $x^2$ atau `np.sin(x)` untuk fungsi sinus.")
 
 st.divider()
 
@@ -112,5 +106,5 @@ st.divider()
 # FOOTER
 # ===============================
 st.caption("""
-© 2025 | Aplikasi Solusi Integral Numerik | Built with Streamlit, NumPy, and Matplotlib
+© 2025 | Aplikasi Solusi Integral Numerik | Powered by Streamlit
 """)
